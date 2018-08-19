@@ -7,12 +7,21 @@
 class Block {
 public:
     byte magic[4];
-    int size;
-    byte header[80];
 
-    Block(FILE* filePointer);
+    size_t blockSize;
+
+    byte* blockData;
+
+    // В конструкторе считываем Magic Number
+    explicit Block(FILE* filePointer);
+
+    // Считываем размер блока
+    // И потом весь блок
+    bool read(FILE* filePointer);
 
     bool isMagicValid();
+
+    ~Block();
 };
 
 

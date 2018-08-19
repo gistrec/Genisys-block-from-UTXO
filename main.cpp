@@ -11,6 +11,7 @@ int main() {
     string blockPath = "/home/alex/Рабочий стол/php-blockchain-parser/blocks/";
     // Для всех сырых блоков
     // Т.е. в них хранятся блоки блокчейна
+    int i = 0;
     for (size_t rawBlockIndex = 0; rawBlockIndex < 271; rawBlockIndex++) {
         string rawBlockName = getRawBlockName(rawBlockIndex);
         string rawBlockPath = blockPath + rawBlockName;
@@ -18,9 +19,14 @@ int main() {
         FILE* file = fopen(rawBlockPath.c_str(), "r");
         // TODO: проверка на то, что файл есть
 
-        Block block(file);
-
-        return 0;
+        Block* block;
+        // Перебираем блоки в файле
+        while (block = new Block(file), block->isMagicValid()) {
+            block->read(file);
+            // TODO
+            delete block;
+            cout << rawBlockName << "   " << i++ << endl;
+        }
     }
     // cout << getRawBlockName(10) << endl;
 }
