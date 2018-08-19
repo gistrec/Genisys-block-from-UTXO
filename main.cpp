@@ -1,8 +1,4 @@
-#include <iostream>
-#include <string>
-#include <fstream>
-
-using namespace std;
+#include "main.h"
 
 // Получаем название блока вида blk00000.dat
 string getRawBlockName(size_t id) {
@@ -19,11 +15,12 @@ int main() {
         string rawBlockName = getRawBlockName(rawBlockIndex);
         string rawBlockPath = blockPath + rawBlockName;
 
-        ifstream file;
-        file.open(rawBlockPath, std::ifstream::in);
+        FILE* file = fopen(rawBlockPath.c_str(), "r");
+        // TODO: проверка на то, что файл есть
 
+        Block block(file);
 
-
+        return 0;
     }
     // cout << getRawBlockName(10) << endl;
 }
