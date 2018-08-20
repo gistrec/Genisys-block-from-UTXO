@@ -12,10 +12,10 @@ set(SOURCE_FILES
         src/Block.cpp
         src/utils/Utils.cpp)
 
-add_executable(GenisysCreator ${SOURCE_FILES})
+add_executable(genisys_creator ${SOURCE_FILES})
 
 
-add_executable(tests tests/test.cpp)
-target_link_libraries(tests ${GTEST_LIBRARIES} Threads::Threads)
+add_executable(run_tests tests/test.cpp)
+target_link_libraries(run_tests ${GTEST_LIBRARIES} Threads::Threads)
 enable_testing()
-add_test(test "tests/test.cpp")
+add_test(run_tests "tests/test.cpp")
