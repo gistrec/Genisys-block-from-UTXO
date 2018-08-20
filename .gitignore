@@ -11,3 +11,5 @@ CTestTestfile.cmake
 /.idea
 genisys_creator
 run_tests
+Genisys_block_from_UTXO.cbp
+

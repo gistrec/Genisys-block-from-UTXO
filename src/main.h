@@ -5,6 +5,8 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <tuple>
+#include <math.h>
 
 typedef unsigned char byte;
 

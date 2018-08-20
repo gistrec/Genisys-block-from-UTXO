@@ -9,7 +9,7 @@ bool Block::read(FILE *filePointer) {
     // Считываем размер блока
     byte buf[4];
     fread(buf, sizeof(byte), 4, filePointer);
-    blockSize = (size_t) getIntFromBytes((byte*) &buf);
+    blockSize = (size_t) getIntFromBytes((byte*) &buf, 4);
 
     // Считываем весь блок
     blockData = new byte[blockSize];
