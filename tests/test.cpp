@@ -36,19 +36,39 @@ TEST_F(CustomTest, getIntFromBytes) {
     ASSERT_EQ(pow(16, 7), getIntFromBytes(fourth, 4));
 }
 
-/*TEST_F(CustomTest, getVarInt) {
-    byte first[4] = {0x00, 0x00, 0x00, 0x00};
-    ASSERT_EQ(0, getVarInt(first));
+TEST_F(CustomTest, getVarInt) {
+    // Value < 0xFD
+    // No prefix
+    byte first[1] = {0x00};
+    ASSERT_EQ(make_tuple(0, 1), getVarInt(first));
 
-    byte second[4] = {0x00, 0x01, 0x00, 0x00};
-    ASSERT_EQ(16 * 16, getVarInt(second));
+    byte second[1] = {0x08};
+    ASSERT_EQ(make_tuple(8, 1), getVarInt(second));
 
-    byte third[4] = {0x01, 0x01, 0x01, 0x00};
-    ASSERT_EQ(pow(16, 4) + pow(16, 2) + 1, getVarInt(third));
+    byte third[1] = {0xfc};
+    ASSERT_EQ(make_tuple(252, 1), getVarInt(third));
 
-    byte fourth[4] = {0x00, 0x00, 0x00, 0x10};
-    ASSERT_EQ(pow(16, 7), getVarInt(fourth));
-}*/
+    // Value <= 0xFFFF
+    // 0xFD prefix
+    byte fourth[3] = {0xfd, 0x00, 0x00};
+    ASSERT_EQ(make_tuple(0, 3), getVarInt(fourth));
+
+    byte fifth[3] = {0xfd, 0xff, 0xff};
+    ASSERT_EQ(make_tuple(65535, 3), getVarInt(fifth));
+
+    // Value <= 0xFFFF FFFF
+    // 0xFE prefix
+    byte sixth[5] = {0xfe, 0x00, 0x00, 0x00, 0x00};
+    ASSERT_EQ(make_tuple(0, 5), getVarInt(sixth));
+
+    // Value -
+    // 0xFF prefix seventh
+    byte seventh[9] = {0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    ASSERT_EQ(make_tuple(0, 9), getVarInt(seventh));
+
+    byte eighth[9] = {0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00};
+    ASSERT_EQ(make_tuple(16777215, 9), getVarInt(eighth));
+}
 
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
