@@ -6,11 +6,31 @@
 
 class Block {
 public:
+    /*
+     * Первые четыре байта блока
+     * Служат идентификатором начала блока
+     */
     byte magic[4];
 
+    /*
+     * Размер блока в байтах без учета Magic Number
+     */
     size_t blockSize;
 
-    byte* blockData;
+    /*
+     * Заголовок блока
+     */
+    byte header[80] = {};
+
+    /*
+     * Количество транзакций
+     */
+    size_t transactionCount;
+
+    /*
+     * Транзакции
+     */
+    byte* transactions;
 
     // В конструкторе считываем Magic Number
     explicit Block(FILE* filePointer);

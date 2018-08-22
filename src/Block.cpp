@@ -3,17 +3,38 @@
 Block::Block(FILE* filePointer) {
     // Считываем Magic number
     fread(magic, sizeof(byte), 4, filePointer);
+
+    blockSize = 0;
 }
 
 bool Block::read(FILE *filePointer) {
     // Считываем размер блока
-    byte buf[4];
+    byte buf[9];
     fread(buf, sizeof(byte), 4, filePointer);
-    blockSize = getIntFromBytes((byte*) &buf, 4);
+    blockSize = getIntFromBytes((byte *) &buf, 4);
 
-    // Считываем весь блок
-    blockData = new byte[blockSize];
-    fread(blockData, sizeof(byte), (size_t) blockSize, filePointer);
+    // Считываем заголовок блока
+    fread(header, sizeof(byte), 80, filePointer);
+
+    // Считываем количество транзакций
+    // Так как размер может быть от 1 до 9 байт
+    // То считываем максимум, т.е. 9 байт
+    // А потом вернемся назад на лишнее кол-во байт
+    fread(buf, sizeof(byte), 9, filePointer);
+    std::tuple<size_t, int> result = getVarInt((byte *) &buf);
+
+    transactionCount = get<0>(result);
+    int byteCount = get<1>(result);
+
+    fseek(filePointer, 9 - byteCount, SEEK_CUR);
+
+
+    // Считываем транзакции
+
+    // size_t transactionSize = blockSize - 4 - 80 - byteCount;
+    // transactions = new byte[transactionSize];
+
+    // fread(transactions, sizeof(byte), transactionSize, filePointer);
 }
 
 bool Block::isMagicValid() {
@@ -24,5 +45,5 @@ bool Block::isMagicValid() {
 }
 
 Block::~Block() {
-    delete [] blockData;
+    delete [] transactions;
 }

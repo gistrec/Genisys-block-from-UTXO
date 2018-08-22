@@ -17,6 +17,6 @@ size_t getIntFromBytes(byte* buffer, int count);
  * @return 1. uint16_t - число (8 байт)
  *         2. int - кол-во байт, которое занимает это число
  */
-tuple<size_t, int> getVarInt(byte* buffer);
+std::tuple<size_t, int> getVarInt(byte* buffer);
 
 #endif //GENISYS_BLOCK_FROM_UTXO_UTILS_H

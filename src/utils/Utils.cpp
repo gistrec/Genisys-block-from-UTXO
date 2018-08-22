@@ -20,7 +20,7 @@ size_t getIntFromBytes(byte* buffer, int count) {
 //  <= 0xFFFF       3                 0xFD followed by the length as uint16_t
 //  <= 0xFFFF FFFF  5                 0xFE followed by the length as uint32_t
 //  -               9                 0xFF followed by the length as uint64_t
-tuple<size_t, int> getVarInt(byte* buffer) {
+std::tuple<size_t, int> getVarInt(byte* buffer) {
     byte first = buffer[0];
     if (first < 253) {
         return make_tuple(first, 1);
