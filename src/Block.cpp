@@ -17,16 +17,7 @@ bool Block::read(FILE *filePointer) {
     fread(header, sizeof(byte), 80, filePointer);
 
     // Считываем количество транзакций
-    // Так как размер может быть от 1 до 9 байт
-    // То считываем максимум, т.е. 9 байт
-    // А потом вернемся назад на лишнее кол-во байт
-    fread(buf, sizeof(byte), 9, filePointer);
-    std::tuple<size_t, int> result = getVarInt((byte *) &buf);
-
-    transactionCount = get<0>(result);
-    int byteCount = get<1>(result);
-
-    fseek(filePointer, byteCount - 9, SEEK_CUR);
+    transactionCount = readVarInt(filePointer);
 
 
     // Считываем транзакции

@@ -32,3 +32,20 @@ std::tuple<size_t, int> getVarInt(byte* buffer) {
         return make_tuple(getIntFromBytes(buffer + 1, 8), 9);
     }
 }
+
+size_t readVarInt(FILE* filePointer) {
+    // Так как размер может быть от 1 до 9 байт
+    // То считываем максимум, т.е. 9 байт
+    // А потом вернемся назад на лишнее кол-во байт
+    byte buf[9];
+
+    fread(buf, sizeof(byte), 9, filePointer);
+    std::tuple<size_t, int> result = getVarInt((byte *) &buf);
+
+    int byteCount = get<1>(result);
+
+    // Сдвигаем на лишнее количество байт назад
+    fseek(filePointer, byteCount - 9, SEEK_CUR);
+
+    return get<0>(result);
+}
