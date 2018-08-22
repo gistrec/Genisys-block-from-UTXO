@@ -14,20 +14,21 @@ int getIntFromBytes(byte* buffer, int count) {
     */
 }
 
-std::tuple<int, int> getVarInt(byte* buffer) {
-    /*byte first = buffer[0];
-    int position = 1;
+
+//  Value           Storage length    Format
+//  < 0xFD          1                 uint8_t
+//  <= 0xFFFF       3                 0xFD followed by the length as uint16_t
+//  <= 0xFFFF FFFF  5                 0xFE followed by the length as uint32_t
+//  -               9                 0xFF followed by the length as uint64_t
+tuple<int, int> getVarInt(byte* buffer) {
+    byte first = buffer[0];
     if (first < 253) {
-        return {first, position};
-    }else if (first == 252) {
-        position += 3;
-        char buf[]
-        return {hexToNumber(substr($data, $position - 2, 2)), 3};
+        return make_tuple(first, 1);
+    }else if (first == 253) {
+        return make_tuple(getIntFromBytes(buffer + 1, 2), 3);
     }else if (first == 254) {
-        position += 5;
-        return self::hexToNumber(substr($data, $position - 4, 4));
+        return make_tuple(getIntFromBytes(buffer + 1, 4), 5);
     }else if (first == 255) {
-        position += 9;
-        return self::hexToNumber(substr($data, $position - 8, 8));
-    }*/
+        return make_tuple(getIntFromBytes(buffer + 1, 8), 9);
+    }
 }
