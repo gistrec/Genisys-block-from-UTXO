@@ -26,10 +26,9 @@ bool Block::read(FILE *filePointer) {
         transaction->read(filePointer);
         transactions.push_back(transaction);
     }
-    // size_t transactionSize = blockSize - 4 - 80 - byteCount;
-    // transactions = new byte[transactionSize];
 
-    // fread(transactions, sizeof(byte), transactionSize, filePointer);
+    // Считываем lock_time
+    fread(buf, sizeof(byte), 4, filePointer);
 }
 
 bool Block::isMagicValid() {

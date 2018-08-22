@@ -3,8 +3,14 @@
 
 #include "../main.h"
 
+// Формат выхода:
+// 8 байт     - количество сатоши для перевода
+// 1-9 байт   - длина скрипта
+// много байт - скрипт
 class TransactionOutput {
 public:
+    size_t scriptSize;
+
     explicit TransactionOutput(FILE* filePointer);
 };
 
