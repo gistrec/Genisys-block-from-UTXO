@@ -9,7 +9,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED on)
 
 set(ADDITIONAL_FILES
         src/Block.cpp
-        src/utils/Utils.cpp)
+        src/utils/Utils.cpp
+        src/transactions/Transaction.cpp
+        src/transactions/TransactionInput.cpp
+        src/transactions/TransactionOutput.cpp)
 
 add_executable(genisys_creator src/main.cpp ${ADDITIONAL_FILES})
 
