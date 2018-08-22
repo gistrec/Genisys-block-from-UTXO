@@ -3,6 +3,9 @@
 
 #include "main.h"
 #include "utils/Utils.h"
+#include "transactions/Transaction.h"
+
+class Transaction;
 
 class Block {
 public:
@@ -28,9 +31,9 @@ public:
     size_t transactionCount;
 
     /*
-     * Транзакции
+     * Список транзакций
      */
-    byte* transactions;
+    std::vector<Transaction*> transactions;
 
     // В конструкторе считываем Magic Number
     explicit Block(FILE* filePointer);

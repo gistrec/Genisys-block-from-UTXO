@@ -26,11 +26,15 @@ bool Block::read(FILE *filePointer) {
     transactionCount = get<0>(result);
     int byteCount = get<1>(result);
 
-    fseek(filePointer, 9 - byteCount, SEEK_CUR);
+    fseek(filePointer, byteCount - 9, SEEK_CUR);
 
 
     // Считываем транзакции
-
+    for (int i = 0; i < transactionCount; i++) {
+        Transaction* transaction = new Transaction();
+        transaction->read(filePointer);
+        transactions.push_back(transaction);
+    }
     // size_t transactionSize = blockSize - 4 - 80 - byteCount;
     // transactions = new byte[transactionSize];
 
@@ -45,5 +49,5 @@ bool Block::isMagicValid() {
 }
 
 Block::~Block() {
-    delete [] transactions;
+    // delete [] transactions;
 }
