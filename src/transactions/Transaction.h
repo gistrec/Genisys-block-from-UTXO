@@ -23,6 +23,7 @@ public:
     std::vector<TransactionOutput*> outputs;
 
     Transaction() = default;
+    ~Transaction();
 
     void read(FILE* filePointer);
 };

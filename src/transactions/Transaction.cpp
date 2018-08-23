@@ -14,7 +14,7 @@ void Transaction::read(FILE* filePointer) {
     inputCount = readVarInt(filePointer);
 
     for (int i = 0; i < inputCount; i++) {
-        TransactionInput* input = new TransactionInput(filePointer);
+        auto input = new TransactionInput(filePointer);
         inputs.push_back(input);
     }
 
@@ -23,10 +23,19 @@ void Transaction::read(FILE* filePointer) {
     outputCount = readVarInt(filePointer);
 
     for (int i = 0; i < outputCount; i++) {
-        TransactionOutput* output = new TransactionOutput(filePointer);
+        auto output = new TransactionOutput(filePointer);
         outputs.push_back(output);
     }
 
     // Считываем lock time
     fseek(filePointer, 4, SEEK_CUR);
+}
+
+Transaction::~Transaction() {
+    for (auto input : inputs) {
+        delete input;
+    }
+    for (auto output : outputs) {
+        delete output;
+    }
 }

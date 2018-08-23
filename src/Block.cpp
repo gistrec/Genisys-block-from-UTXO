@@ -22,7 +22,7 @@ bool Block::read(FILE *filePointer) {
 
     // Считываем транзакции
     for (int i = 0; i < transactionCount; i++) {
-        Transaction* transaction = new Transaction();
+        auto transaction = new Transaction();
         transaction->read(filePointer);
         // transactions.push_back(transaction);
     }
@@ -36,5 +36,7 @@ bool Block::isMagicValid() {
 }
 
 Block::~Block() {
-    // delete [] transactions;
+    for (auto transaction : transactions) {
+        delete transaction;
+    }
 }
