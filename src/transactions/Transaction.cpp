@@ -40,8 +40,11 @@ void Transaction::read(FILE* filePointer) {
     fseek(filePointer, byteCount - 9, SEEK_CUR);
 
 
-    for (int i = 0; i < inputCount; i++) {
+    for (int i = 0; i < outputCount; i++) {
         TransactionOutput* output = new TransactionOutput(filePointer);
         outputs.push_back(output);
     }
+
+    // Считываем lock time
+    fseek(filePointer, 4, SEEK_CUR);
 }

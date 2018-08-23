@@ -24,12 +24,8 @@ bool Block::read(FILE *filePointer) {
     for (int i = 0; i < transactionCount; i++) {
         Transaction* transaction = new Transaction();
         transaction->read(filePointer);
-        transactions.push_back(transaction);
+        // transactions.push_back(transaction);
     }
-    // size_t transactionSize = blockSize - 4 - 80 - byteCount;
-    // transactions = new byte[transactionSize];
-
-    // fread(transactions, sizeof(byte), transactionSize, filePointer);
 }
 
 bool Block::isMagicValid() {
