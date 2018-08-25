@@ -73,7 +73,7 @@ TEST_F(CustomTest, getVarInt) {
     ASSERT_EQ(make_tuple(16777215, 9), getVarInt(ninth));
 
     byte tenth[9] = {0xff, 0xff, 0xff, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff};
-    ASSERT_EQ(make_tuple(18446744069414649856, 9), getVarInt(tenth));
+    ASSERT_EQ(make_tuple(18446744069414649856U, 9), getVarInt(tenth));
 }
 
 int main(int argc, char** argv) {

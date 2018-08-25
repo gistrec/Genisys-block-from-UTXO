@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+
 #include <fstream>
 #include <vector>
 #include <tuple>
@@ -10,7 +11,7 @@
 #include <map>
 
 typedef unsigned char byte;
-typedef basic_string<unsigned char> ustring;
+typedef std::basic_string<unsigned char> ustring;
 
 #include "Block.h"
 

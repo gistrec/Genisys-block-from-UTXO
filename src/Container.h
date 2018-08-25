@@ -18,7 +18,7 @@ public:
      * @param hash - хэш транзакции
      * @return Transaction* или nullptr
      */
-    Transaction* operator [] (byte* hash);
+    Transaction* operator[] (ustring hash);
 
     /**
      * Добавить транзакцию в контейнер
