@@ -1,0 +1,61 @@
+version: 2
+
+jobs:
+  checkout_code:
+    working_directory: ~/repo
+    # docker:
+      # - image: circleci/clojure:lein-2.7.1
+    steps:
+      - checkout
+      - run:
+          name: post checkout check
+          command: |
+            echo $PWD
+            ls -aslh .
+            ls -aslh ~
+            ls -aslh ~/tmp
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  build_site:
+    working_directory: ~/repo
+    #docker:
+     # - image: circleci/clojure:lein-2.7.1
+    steps:
+      - attach_workspace:
+          at: ~/repo
+
+      - run:
+          name: build
+          command: |
+            pwd
+
+  deploy:
+    working_directory: ~/tmp
+    machine:
+        enabled: true
+
+    steps:
+      # - attach_workspace:
+          # at: ~/tmp/resources/public
+
+      - run:
+          name: Are my assets here?
+          command: |
+            pwd
+            ls -lrt
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - checkout_code
+      - build_site:
+          requires:
+            - checkout_code
+      - deploy:
+          requires:
+            - checkout_code
+            - build_site
