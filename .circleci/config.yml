@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: rikorose/gcc-cmake:latest
     steps:
-      - run: checkout
+      - checkout
       - run:
           name: build application
           command: cmake --build . --target run_tests -- -j 2
