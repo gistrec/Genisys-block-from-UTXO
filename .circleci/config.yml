@@ -1,28 +1,36 @@
 version: 2
 jobs:
-  build:
+  gtest:
+    working_directory: ~/project
     docker:
       - image: rikorose/gcc-cmake:latest
     steps:
       - checkout
+      - run: apt-get update
+      - run: apt-get install -y libgtest-dev
+      - run:
+          working_directory: /usr/src/gtest/
+          command: cmake CMakeLists.txt
+      - run:
+          working_directory: /usr/src/gtest/
+          command: make
+      - run: cp /usr/src/gtest/*.a /usr/lib
+      - run:
+          name: init cmake
+          command: cmake .
       - run:
           name: build application
           command: cmake --build . --target run_tests -- -j 2
-  test:
-    docker:
-      - image: rikorose/gcc-cmake:latest
-    steps:
       - run:
           name: run tests
-          command: /bin/bash run_tests --gtest_filter=*
+          command: ./run_tests --gtest_filter=*
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - gtest:
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - autotest
