@@ -2,19 +2,25 @@ version: 2
 jobs:
   build:
     docker:
-      - image: ubuntu
+      - image: rikorose/gcc-cmake:latest
     steps:
-      - checkout
-      - run: pwd
+      - run: checkout
+      - run:
+          name: build application
+          command: cmake --build . --target run_tests -- -j 2
   test:
-    docker:
-      - image: ubuntu
     steps:
-      - checkout
-      - run: pwd
+      - run:
+          name: run tests
+          command: /bin/bash run_tests --gtest_filter=*
 workflows:
   version: 2
   build_and_test:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
