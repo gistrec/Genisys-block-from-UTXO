@@ -9,6 +9,8 @@ jobs:
           name: build application
           command: cmake --build . --target run_tests -- -j 2
   test:
+    docker:
+      - image: rikorose/gcc-cmake:latest
     steps:
       - run:
           name: run tests
