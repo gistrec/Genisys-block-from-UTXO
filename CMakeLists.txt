@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED on)
 
 set(ADDITIONAL_FILES
         src/Block.cpp
+        src/Container.cpp
         src/utils/Utils.cpp
         src/transactions/Transaction.cpp
         src/transactions/TransactionInput.cpp

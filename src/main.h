@@ -7,8 +7,10 @@
 #include <vector>
 #include <tuple>
 #include <math.h>
+#include <map>
 
 typedef unsigned char byte;
+typedef basic_string<unsigned char> ustring;
 
 #include "Block.h"
 
