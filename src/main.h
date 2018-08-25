@@ -17,4 +17,6 @@ typedef std::basic_string<unsigned char> ustring;
 
 using namespace std;
 
+int main(int argc, char** argv);
+
 #endif //GENISYS_BLOCK_FROM_UTXO_MAIN_H

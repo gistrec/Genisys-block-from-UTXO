@@ -7,7 +7,7 @@ string getRawBlockName(size_t id) {
     return result;
 }
 
-int main() {
+int main(int argc, char** argv) {
     string blockPath = "/home/alex/Рабочий стол/php-blockchain-parser/blocks/";
     // Для всех сырых блоков
     // Т.е. в них хранятся блоки блокчейна
