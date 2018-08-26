@@ -34,6 +34,8 @@ public:
      * которые соответствуют этому выходу
      */
     std::vector<byte> getSourceBytes();
+
+    ~TransactionInput();
 };
 
 

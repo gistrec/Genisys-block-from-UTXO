@@ -58,3 +58,7 @@ vector<byte> TransactionInput::getSourceBytes() {
 
     return result;
 }
+
+TransactionInput::~TransactionInput() {
+    delete[] script;
+}
