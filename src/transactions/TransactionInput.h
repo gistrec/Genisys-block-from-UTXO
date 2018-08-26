@@ -10,13 +10,30 @@
 // много байт - скрипт
 // 4 байта    - sequence number
 class TransactionInput {
-public:
+private:
     byte hashPreviousTrans[32];
     size_t indexPreviousTrans;
 
     size_t scriptSize;
+    byte* script;
 
+    size_t sequence_number;
+
+public:
     explicit TransactionInput(FILE* filePointer);
+
+    /**
+     * Получить хэш предыдущей транзакции
+     * @return vector<byte> длинной 32 байта
+     */
+    std::vector<byte> getHashPreviousTrans();
+    size_t getIndexPreviousTrans();
+
+    /**
+     * Получить изначальную последовательность байт,
+     * которые соответствуют этому выходу
+     */
+    std::vector<byte> getSourceBytes();
 };
 
 

@@ -7,6 +7,7 @@
 #include "./utils.cpp"
 #include "./sha256.cpp"
 #include "./container.cpp"
+#include "./transaction.cpp"
 
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
