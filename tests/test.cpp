@@ -5,6 +5,7 @@
 #include <math.h>
 
 #include "./utils.cpp"
+#include "./sha256.cpp"
 #include "./container.cpp"
 
 int main(int argc, char** argv) {

@@ -14,6 +14,7 @@ typedef unsigned char byte;
 typedef std::basic_string<unsigned char> ustring;
 
 #include "Block.h"
+#include "utils/sha256.h"
 
 using namespace std;
 
