@@ -8,7 +8,7 @@
 class Transaction;
 
 class Block {
-public:
+private:
     /*
      * Первые четыре байта блока
      * Служат идентификатором начала блока
@@ -35,6 +35,7 @@ public:
      */
     std::vector<Transaction*> transactions;
 
+public:
     // В конструкторе считываем Magic Number
     explicit Block(FILE* filePointer);
 
@@ -43,6 +44,11 @@ public:
     bool read(FILE* filePointer);
 
     bool isMagicValid();
+
+    /**
+     * Получаем все транзакции
+     */
+    std::vector<Transaction*> getTransactions();
 
     ~Block();
 };

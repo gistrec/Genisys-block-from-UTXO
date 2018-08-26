@@ -24,7 +24,7 @@ bool Block::read(FILE *filePointer) {
     for (int i = 0; i < transactionCount; i++) {
         auto transaction = new Transaction();
         transaction->read(filePointer);
-        // transactions.push_back(transaction);
+        transactions.push_back(transaction);
     }
 }
 
@@ -33,6 +33,10 @@ bool Block::isMagicValid() {
            magic[1] == 0xbe &&
            magic[2] == 0xb4 &&
            magic[3] == 0xd9;
+}
+
+std::vector<Transaction*> Block::getTransactions() {
+    return transactions;
 }
 
 Block::~Block() {

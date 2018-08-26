@@ -10,7 +10,7 @@ class TransactionInput;
 class TransactionOutput;
 
 class Transaction {
-public:
+private:
     size_t version;
 
     size_t inputCount;
@@ -22,10 +22,35 @@ public:
     // Выходы
     std::vector<TransactionOutput*> outputs;
 
+    size_t lock_time;
+
+    /**
+     * Массив показывает потрачен выход или нет
+     */
+    std::map<int, bool> spend;
+
+public:
     Transaction() = default;
     ~Transaction();
 
+    void spendOutput(int index);
+
+    std::string getHash();
+
+    /**
+     * Функция нужна для проверки наличия непотраченных выходов
+     * @return bool
+     */
+    bool haveUnsepndOutput();
+
+    /**
+     * Функция нужна для чтения транзакции из файла
+     * @param filePointer - объект файла
+     */
     void read(FILE* filePointer);
+
+    std::vector<TransactionInput*>  getInputs();
+    std::vector<TransactionOutput*> getOutputs();
 };
 
 
