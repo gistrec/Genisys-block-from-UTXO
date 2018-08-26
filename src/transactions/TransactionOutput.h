@@ -8,10 +8,20 @@
 // 1-9 байт   - длина скрипта
 // много байт - скрипт
 class TransactionOutput {
-public:
+private:
+    // Количество сатоши для перевода
+    byte value[8];
+
     size_t scriptSize;
 
+    byte* script;
+
+public:
     explicit TransactionOutput(FILE* filePointer);
+
+    std::vector<byte> getSourceBytes();
+
+    ~TransactionOutput();
 };
 
 
