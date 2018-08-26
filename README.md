@@ -1,31 +1,57 @@
-# Genisys-block-from-UTXO
+# Genisys creator
+[![CircleCI](https://img.shields.io/circleci/project/github/gistrec/Genisys-block-from-UTXO.svg?style=for-the-badge)](https://circleci.com/gh/gistrec/Genisys-block-from-UTXO)
 
----
-### Установка Google Test
-```
-sudo apt-get install libgtest-dev
-cd /usr/src/gtest
-sudo cmake CMakeLists.txt
-sudo make
+С помощью этого проекта можно создать генезис блок биткоина, который не будет включать в себя потраченные транзакции  
 
-# copy or symlink libgtest.a and libgtest_main.a to your /usr/lib folder
-sudo cp *.a /usr/lib
-```
----
-### Загрузка
-Используйте команду [git clone](https://git-scm.com/docs/git-clone) чтобы скачать этот проект.
-```
-git clone --depth=1 git@github.com:gistrec/Genisys-block-from-UTXO.git GenisysCreator
-cd GenisysCreator
-```
-#### Запуск тестов
-```
-cmake --build . --target run_tests -- -j 2
-./run_tests --gtest_filter=* --gtest_color=yes
-```
+___
 
-#### Создание генезис блока
+### Документация
+Всю документацию можно посмотреть в папке [docs]
+___
+
+### Зависимости
+* [GTest] - фреймворк для юнит-тестирования
+* [cmake] - кроссплатформенная система автоматизации сборки  
+
+___
+
+
+### Сборка
+* [Установка GTest]
+* [Установка CMake v3.9]  
+
+Скачайте проект командой [git clone](https://git-scm.com/docs/git-clone):
+```
+git clone --depth=1 git@github.com:gistrec/Genisys-block-from-UTXO.git Genisys-creator
+cd Genisys-creator
+```  
+
+Соберите проект с помощью CMake:
 ```
 cmake --build . --target genisys_creator -- -j 2
-./genisys_creator
 ```
+
+### Запуск
+Доступные флаги для запуска:
+
+| Флаг   | Описание |
+| ------ | -------- |
+| -path `<путь>` | Путь до блоков |
+
+**Флаг -path является обязательным!**
+
+Пример запуска:
+```
+./genisys_creator -path /home/blockchain/
+```
+
+___
+
+### Todos
+ - Добавить поддержку этого блока в bitcoin core/miner
+
+   [docs]: <https://github.com/gistrec/Genisys-block-from-UTXO/tree/master/docs>
+   [GTest]: <https://github.com/google/googletest>
+   [cmake]: <https://cmake.org/>
+   [Установка GTest]: <https://github.com/gistrec/Genisys-block-from-UTXO/blob/master/docs/gtest.md>
+   [Установка CMake v3.9]: <https://github.com/gistrec/Genisys-block-from-UTXO/blob/master/docs/cmake.md>
