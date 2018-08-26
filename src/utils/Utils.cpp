@@ -15,6 +15,15 @@ size_t getIntFromBytes(byte* buffer, int count) {
 }
 
 
+vector<byte> getBytesFromInt(size_t value, int count) {
+    vector<byte> buffer(count);
+    for (int i = 0; i < count; i++) {
+        buffer[i] = (byte) (value >> (i * 8));
+    }
+    return buffer;
+}
+
+
 //  Value           Storage length    Format
 //  < 0xFD          1                 uint8_t
 //  <= 0xFFFF       3                 0xFD followed by the length as uint16_t
@@ -31,6 +40,30 @@ std::tuple<size_t, int> getVarInt(byte* buffer) {
     }else if (first == 255) {
         return make_tuple(getIntFromBytes(buffer + 1, 8), 9);
     }
+}
+
+vector<byte> putVarInt(size_t value) {
+    vector<byte> result;
+    if (value < 0xFDU) {
+        // Число состоит из 1 байта
+        return getBytesFromInt(value, 1);
+    }else if (value <= 0xFFFFU) { // Число изх
+        // Число состоит из 2 байт
+        result.push_back(0xFD);
+        vector<byte> buffer = getBytesFromInt(value, 2);
+        result.insert(result.end(), buffer.begin(), buffer.end());
+    }else if (value <= 0xFFFFFFFFU) {
+        // Число состоит из 4 байт
+        result.push_back(0xFE);
+        vector<byte> buffer = getBytesFromInt(value, 4);
+        result.insert(result.end(), buffer.begin(), buffer.end());
+    }else {
+        // Число состоит из 8 байт
+        result.push_back(0xFF);
+        vector<byte> buffer = getBytesFromInt(value, 8);
+        result.insert(result.end(), buffer.begin(), buffer.end());
+    }
+    return result;
 }
 
 size_t readVarInt(FILE* filePointer) {
