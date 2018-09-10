@@ -28,6 +28,7 @@ cd Genisys-creator
 
 Соберите проект с помощью CMake:
 ```
+cmake .
 cmake --build . --target genisys_creator -- -j 2
 ```
 
